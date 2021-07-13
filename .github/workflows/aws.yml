@@ -69,6 +69,7 @@ jobs:
 
     - name: Terraform Apply
       run: |
-        ls ~/.aws/
+        cat ~/.aws/credentials
+        cat ~/.aws/config
         cd infra
         sudo terraform apply -var-file="envs/desafio.tfvars" --auto-approve
