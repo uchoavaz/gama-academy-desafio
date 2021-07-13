@@ -73,4 +73,4 @@ jobs:
         cat ~/.aws/credentials
         cat ~/.aws/config
         cd infra
-        sudo terraform apply -var-file="envs/desafio.tfvars" --auto-approve
+        terraform apply -var-file="envs/desafio.tfvars" --auto-approve
