@@ -47,4 +47,6 @@ jobs:
         aws-region: us-east-1
 
     - name: Check credentials
-      run: ls ~/.aws/
+      run: sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      run: sudo unzip awscliv2.zip
+      run: aws --version
