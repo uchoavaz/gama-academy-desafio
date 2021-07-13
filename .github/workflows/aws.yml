@@ -58,7 +58,11 @@ jobs:
         sudo sudo mv terraform /usr/local/bin/
 
     - name: Terraform Init
-      run: terraform init
+      run: |
+        cd infra
+        terraform init
 
     - name: Terraform Apply
-      run: sudo terraform apply -var-file="envs/desafio.tfvars" --auto-approve
+      run: |
+        cd infra
+        sudo terraform apply -var-file="envs/desafio.tfvars" --auto-approve
