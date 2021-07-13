@@ -1,0 +1,17 @@
+{
+  "name": "sre-challenge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gama Academy SRE Challenge",
+  "repository": "https://github.com/gamaacademy/sre-challenge",
+  "license": "MIT",
+  "author": "Ricardo Ferro <ricardo.ferro@gama.academy>",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.1.5",
+    "hapi-pino": "^8.3.0"
+  }
+}
