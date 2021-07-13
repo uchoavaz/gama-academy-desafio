@@ -31,7 +31,7 @@ name: Deploy to Amazon ECS
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
 
@@ -56,4 +56,9 @@ jobs:
         sudo wget https://releases.hashicorp.com/terraform/1.0.1/terraform_1.0.1_linux_amd64.zip
         sudo unzip terraform_1.0.1_linux_amd64.zip
         sudo sudo mv terraform /usr/local/bin/
-        ls 
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Apply
+      run: sudo terraform apply -var-file="envs/desafio.tfvars" --auto-approve
