@@ -46,8 +46,14 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Check credentials     
+#     - name: Install aws cli     
+#       run: |
+#         sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#         sudo unzip awscliv2.zip
+#         aws iam list-roles
+    - name: Install terraform     
       run: |
-        sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        sudo unzip awscliv2.zip
-        aws iam list-roles
+        sudo wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip
+        sudo unzip terraform_0.12.18_linux_amd64.zip
+        sudo sudo mv terraform /usr/local/bin/
+        terraform --version 
