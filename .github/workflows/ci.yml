@@ -37,7 +37,7 @@ jobs:
 
     - name: Create bucket for terraform state
       run: |
-        aws s3 mb s3://${{ env.BUCKET }} -–region ${{ env.AWS_ACCOUNT_REGION }}
+        aws s3 mb s3://${{ env.BUCKET }}
 
     - name: Terraform Init
       run: |
