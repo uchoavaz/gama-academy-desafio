@@ -74,3 +74,11 @@ CI/CD Workflow
 - **Deploy/Destroy AWS Infra (Dev or Prod)**: Este job é destinado ao deploy da infraestrutura do ECS + ALB + Cloudwatch Alarms and Logs + Auto Scale + Permissive Roles and Policies pelo Terraform
 - **Push image to ECR**: Este job é destinado a gerar o build da imagem do Docker e realizar o push deste para o ECR
 - **Deploy app to ECS**: This job is intended to update the task definition to ECS so that tasks start running with the last image inserted in the ECR
+  
+App Logs
+------------
+Container/application exception logs are located in cloudwatch logs. Follow the access link.
+  
+Resource Monitoring
+------------
+As métricas de utilização dos recursos das máquinas do Fargate estão localizadas no Cloudwatch. Segue o link.
