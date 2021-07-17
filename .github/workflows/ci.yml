@@ -44,6 +44,7 @@ jobs:
       run: |
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
+        if [ "$(cat terraform_command)" == "apply" ]; then echo "apply"; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "destroy"; fi
   
     - name: Cancelling
       uses: andymckay/cancel-action@0.2
