@@ -68,18 +68,19 @@ Check Deploy Status
   2. For the deploy(Apply) to have completed successfully, the 3 jobs must have been successfully completed. (Deploy/Destroy AWS Infra <Dev or Prod>, Push image to ECR and Deploy app to ECS)
   3. For the deploy(Destroy) to have completed successfully, only the first job(Deploy/Destroy AWS Infra <Dev or Prod>) must have been successfully.
 
-  
-CI/CD Workflow
-------------
-
 - **Deploy/Destroy AWS Infra (Dev or Prod)**: Este job é destinado ao deploy da infraestrutura do ECS + ALB + Cloudwatch Alarms and Logs + Auto Scale + Permissive Roles and Policies pelo Terraform
 - **Push image to ECR**: Este job é destinado a gerar o build da imagem do Docker e realizar o push deste para o ECR
 - **Deploy app to ECS**: This job is intended to update the task definition to ECS so that tasks start running with the last image inserted in the ECR
-  
+
+Access Application
+------------
+
+- Go to https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName, select the load balancer (desafio-lb for prod and desafio-lb-devel for dev), copy the dns name and paste in your browser search bar to access de application.
+
 App Logs
 ------------
-Container/application exception logs are located in cloudwatch logs. Follow the access link.
+Container/application exception logs are located in cloudwatch logs. Go to https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Fecs$252Fapp to access app logs.
   
 Resource Monitoring
 ------------
-As métricas de utilização dos recursos das máquinas do Fargate estão localizadas no Cloudwatch. Segue o link.
+As métricas de utilização dos recursos das máquinas do Fargate estão localizadas no Cloudwatch. Go to https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#container-insights:performance/ECS:Cluster?~(query~(controls~(CW*3a*3aECS.cluster~(~'desafio)))~context~()) to access metrics.
