@@ -16,7 +16,7 @@ This deploy consists of using Github actions for an automated deploy of the appl
 GitHub Set credentials
 ------------
 
-In https://github.com/uchoavaz/gama-academy-desafio/settings/secrets/actions set 4 repository secrets:acces
+In https://github.com/uchoavaz/gama-academy-desafio/settings/secrets/actions set 4 repository secrets:
 - AWS_ACCESS_KEY_ID_DEV
 - AWS_SECRET_ACCESS_KEY_DEV
 - AWS_ACCESS_KEY_ID_PROD
