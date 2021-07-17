@@ -9,6 +9,8 @@ jobs:
     name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
+    outputs:
+      DESTROY: "TRUE"
 
     steps:
     - name: Checkout
