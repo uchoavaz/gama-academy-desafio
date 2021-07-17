@@ -10,13 +10,13 @@ How the deploy works
 This deploy consists of using Github actions for an automated deploy of the application in Node.js in the ECS service with Fargate, from AWS. The workflow consists in:
   1. Set Aws Credentials in Github
   2. Deploy the application only setting apply or destroy and pushing the commit to the dev branch(dev environment) or master branch (prod environment).
-  3. Check for the CI/CD treadmill
-  4. Use the application
+  3. Check for the CI/CD treadmill.
+  4. Use the application.
 
 GitHub Set credentials
 ------------
 
-In https://github.com/uchoavaz/gama-academy-desafio/settings/secrets/actions set 4 repository secrets:
+In [github secrets](https://github.com/uchoavaz/gama-academy-desafio/settings/secrets/actions) set 4 repository secrets:
 - AWS_ACCESS_KEY_ID_DEV
 - AWS_SECRET_ACCESS_KEY_DEV
 - AWS_ACCESS_KEY_ID_PROD
@@ -64,23 +64,23 @@ DEPLOY
 
 Check Deploy Status
 ------------
-  1. Go to https://github.com/uchoavaz/gama-academy-desafio/actions and click in the workflow with the commit made in the last task
-  2. For the deploy(Apply) to have completed successfully, the 3 jobs must have been successfully completed. (Deploy/Destroy AWS Infra <Dev or Prod>, Push image to ECR and Deploy app to ECS)
+  1. Go to [github-actions](https://github.com/uchoavaz/gama-academy-desafio/actions) and click in the workflow with the commit made in the last task.
+  2. For the deploy(Apply) to have completed successfully, the 3 jobs must have been successfully completed. (Deploy/Destroy AWS Infra <Dev or Prod>, Push image to ECR and Deploy app to ECS).
   3. For the deploy(Destroy) to have completed successfully, only the first job(Deploy/Destroy AWS Infra <Dev or Prod>) must have been successfully.
 
-- **Deploy/Destroy AWS Infra (Dev or Prod)**: Este job é destinado ao deploy da infraestrutura do ECS + ALB + Cloudwatch Alarms and Logs + Auto Scale + Permissive Roles and Policies pelo Terraform
-- **Push image to ECR**: Este job é destinado a gerar o build da imagem do Docker e realizar o push deste para o ECR
-- **Deploy app to ECS**: This job is intended to update the task definition to ECS so that tasks start running with the last image inserted in the ECR
+- **Deploy/Destroy AWS Infra (Dev or Prod)**: Este job é destinado ao deploy da infraestrutura do ECS + ALB + Cloudwatch Alarms and Logs + Auto Scale + Permissive Roles and Policies pelo Terraform.
+- **Push image to ECR**: Este job é destinado a gerar o build da imagem do Docker e realizar o push deste para o ECR.
+- **Deploy app to ECS**: This job is intended to update the task definition to ECS so that tasks start running with the last image inserted in the ECR.
 
 Access Application
 ------------
 
-- Go to https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName, select the load balancer (desafio-lb for prod and desafio-lb-devel for dev), copy the dns name and paste in your browser search bar to access de application.
+- Go to [link](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName), select the load balancer (desafio-lb for prod and desafio-lb-devel for dev), copy the dns name and paste in your browser search bar to access de application.
 
 App Logs
 ------------
-Container/application exception logs are located in cloudwatch logs. Go to https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Fecs$252Fapp to access app logs.
+Container/application exception logs are located in cloudwatch logs. Go to [link](https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Fecs$252Fapp) to access app logs.
   
 Resource Monitoring
 ------------
-As métricas de utilização dos recursos das máquinas do Fargate estão localizadas no Cloudwatch. Go to https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#container-insights:performance/ECS:Cluster?~(query~(controls~(CW*3a*3aECS.cluster~(~'desafio)))~context~()) to access metrics.
+As métricas de utilização dos recursos das máquinas do Fargate estão localizadas no Cloudwatch. Go to [link](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#container-insights:performance/ECS:Cluster?~(query~(controls~(CW*3a*3aECS.cluster~(~'desafio)))~context~())) to access metrics.
