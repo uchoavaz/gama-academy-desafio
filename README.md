@@ -1,35 +1,76 @@
-# SRE Senior Challenge
+#This project consists of deploying the proposed application in the challenge of the Gama Academy in AWS in an automated way.
 
-Esse teste consiste em desenvolver a pipeline completa para uma API feita em Node.js.
+Requirements
+------------
+- Git >= v2.25.1
+- 2 AWS's account(Prod and Dev) with permissions: Create ALB, Create Target Group, Create ALB Listeners, Create/Update Cluster, Task definition and Services, Create/Update Cloudwatch logs, Create IAM Role, Create Ec2 security groups, Create Cloudwatch metric alarms, Create appautoscaling policy
 
-Fique a vontade para nos fornecer a solução que você achar mais adequada, como EC2, ECS, EKS, Fargate, e etc,
-e também para alterar o projeto conforme a sua necessidade.
+How the deploy works
+------------
+This deploy consists of using Github actions for an automated deploy of the application in Node.js in the ECS service with Fargate, from AWS. The workflow consists in:
+  1. Set Aws Credentials in Github
+  2. Deploy the application only setting apply or destroy and pushing the commit to the dev branch(dev environment) or master branch (prod environment).
+  3. Check for the CI/CD treadmill
+  4. Use the application
 
-Os arquivos principais do projeto são:
+GitHub Set credentials
+------------
 
-- `index.js`: Script que faz o start do servidor
-- `Dockerfile`: Dockerfile para subir o servidor
-- `package*.json`: arquivos de configuração do projeto e das dependências
+In https://github.com/uchoavaz/gama-academy-desafio/settings/secrets/actions set 4 repository secrets:acces
+- AWS_ACCESS_KEY_ID_DEV
+- AWS_SECRET_ACCESS_KEY_DEV
+- AWS_ACCESS_KEY_ID_PROD
+- AWS_SECRET_ACCESS_KEY_PROD
 
-## Pré-requisitos
+** To create Access Key and Secret Access Key go to https://console.aws.amazon.com/iam/home#/users/<user_name> > Security Credentials > Access Key > Create Access Key
 
-- AWS
-- Github Actions
-- Terraform
-- Multi environment *(branches: master, staging, develop, stage/\*)*
-- Automatização da criação e remoção dos environments
-- CloudWatch para os logs da aplicação
-- Monitoramento
 
-## O que vamos avaliar?
+DEPLOY
+------------
 
-- Organização do projeto
-- Facilidade de implantação
-- Padrões
-- Documentação
+- To apply application in Prod:
+ 
+      git checkout master
+      change the content inside the file terraform_ci_state/terraform_command_prod to "apply" (to apply the entire infra and application)
+      git add .
+      git commit -m "<describre the commit here>"
+      git push origin prod
+ 
+- To destroy application in Prod:
+ 
+      git checkout master
+      change the content inside the file terraform_ci_state/terraform_command_prod to "destroy" (to destroy the entire infra and application)
+      git add .
+      git commit -m "<describre the commit here>"
+      git push origin prod
 
-## Instruções
+- To apply application in Dev:
+ 
+      git checkout dev
+      change the content inside the file terraform_ci_state/terraform_command_dev to "apply" (to apply the entire infra and application)
+      git add .
+      git commit -m "<describre the commit here>"
+      git push origin dev    
+ 
+- To destroy application in Dev:
+ 
+      git checkout dev
+      change the content inside the file terraform_ci_state/terraform_command_dev to "destroy" (to destroy the entire infra and application)
+      git add .
+      git commit -m "<describre the commit here>"
+      git push origin dev
 
-- Desenvolva o projeto, seguindo os requisitos desse documento.
-- Vamos apreciar muito um README com o passo a passo para rodar o projeto.
-- Suba o seu projeto para o Github e libere acesso para os usuários `rferro` e `jcbombardelli`.
+
+Check Deploy Status
+------------
+  1. Go to https://github.com/uchoavaz/gama-academy-desafio/actions and click in the workflow with the commit made in the last task
+  2. For the deploy(Apply) to have completed successfully, the 3 jobs must have been successfully completed. (Deploy/Destroy AWS Infra <Dev or Prod>, Push image to ECR and Deploy app to ECS)
+  3. For the deploy(Destroy) to have completed successfully, only the first job(Deploy/Destroy AWS Infra <Dev or Prod>) must have been successfully.
+
+  
+CI/CD Workflow
+------------
+
+- **Deploy/Destroy AWS Infra (Dev or Prod)**: Este job é destinado ao deploy da infraestrutura do ECS + ALB + Cloudwatch Alarms and Logs + Auto Scale + Permissive Roles and Policies pelo Terraform
+- **Push image to ECR**: Este job é destinado a gerar o build da imagem do Docker e realizar o push deste para o ECR
+- **Deploy app to ECS**: This job is intended to update the task definition to ECS so that tasks start running with the last image inserted in the ECR
