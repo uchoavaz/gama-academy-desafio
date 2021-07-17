@@ -45,5 +45,4 @@ jobs:
 
     - name: Terraform Apply
       run: |
-        ls
-        sudo ./apply_destroy_script.sh
+        ./apply_destroy_script.sh
