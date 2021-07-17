@@ -54,7 +54,7 @@ jobs:
       if: ${{ env.DESTROY == 'true'}}
 
   deploy-aws-dev:
-    name: Deploy/Destroy AWS Infra Prod
+    name: Deploy/Destroy AWS Infra Dev
     runs-on: ubuntu-latest
     environment: dev
     env:
