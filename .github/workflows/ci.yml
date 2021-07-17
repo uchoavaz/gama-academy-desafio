@@ -9,8 +9,6 @@ jobs:
     name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
-    outputs:
-      DESTROY: "TRUE"
 
     steps:
     - name: Checkout
@@ -44,11 +42,11 @@ jobs:
       run: |
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
-        if [ "$(cat terraform_command)" == "apply" ]; then echo "::set-output name=DESTROY::false"; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "::set-output name=DESTROY::false"; fi
+        if [ "$(cat terraform_command)" == "apply" ]; then echo "DESTROY=false" >> $GITHUB_ENV"; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "DESTROY=false" >> $GITHUB_ENV"; fi
 
     - name: Terraform Init
       run: |
-        echo ${{needs.init.outputs.DESTROY}}
+        echo ${{ env.DESTROY }}
         
     - name: Cancelling
       uses: andymckay/cancel-action@0.2
