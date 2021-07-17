@@ -22,6 +22,7 @@ In https://github.com/uchoavaz/gama-academy-desafio/settings/secrets/actions set
 - AWS_ACCESS_KEY_ID_PROD
 - AWS_SECRET_ACCESS_KEY_PROD
 
+
 ** To create Access Key and Secret Access Key go to https://console.aws.amazon.com/iam/home#/users/<user_name> > Security Credentials > Access Key > Create Access Key
 
 
