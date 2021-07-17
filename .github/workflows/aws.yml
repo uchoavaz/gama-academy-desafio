@@ -68,6 +68,7 @@ jobs:
 
     - name: Build docker image
       run: |
+        ls
         sudo docker build -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }} .
 
     - name: Push docker image
