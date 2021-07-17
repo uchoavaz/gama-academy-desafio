@@ -9,8 +9,6 @@ jobs:
     name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
-    env:
-      DESTROY: "true"
 
     steps:
     - name: Checkout
@@ -48,7 +46,7 @@ jobs:
 
     - name: Terraform Init
       run: |
-        echo ${{ env.DESTROY }}
+        echo $DESTROY
         
     - name: Cancelling
       uses: andymckay/cancel-action@0.2
