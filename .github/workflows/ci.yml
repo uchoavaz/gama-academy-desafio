@@ -42,10 +42,10 @@ jobs:
     - name: Terraform Apply/Destroy
       run: |
         if [ "$(cat terraform_command)" == "apply" ]; then cd infra && terraform apply -var-file="envs/desafio.tfvars" --auto-approve && echo "DESTROY=false" >> $GITHUB_ENV; elif [ "$(cat terraform_command)" == "destroy" ]; then cd infra && terraform destroy -var-file="envs/desafio.tfvars" --auto-approve && echo "DESTROY=true" >> $GITHUB_ENV; fi
-  
+
     - name: Cancel next jobs
       uses: andymckay/cancel-action@0.2
-      if: ${{ env.DESTROY == 'true' }}
+      if: ${{ env.DESTROY == 'true'}}
 
   push-image:
     name: Push image to ECR
