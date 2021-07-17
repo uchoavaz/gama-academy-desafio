@@ -44,14 +44,10 @@ jobs:
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
         if [ "$(cat terraform_command)" == "apply" ]; then echo "DESTROY=false" >> $GITHUB_ENV; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "DESTROY=true" >> $GITHUB_ENV; fi
-
-    - name: Test
-      run: |
-        echo ${{ env.DESTROY }}
         
-    - name: Cancelling
+    - name: Cancel next jobs
       uses: andymckay/cancel-action@0.2
-      if: ${{ env.DESTROY }} == "true"
+      if: ${{ env.DESTROY }}
 
   push-image:
     name: Push image to ECR
