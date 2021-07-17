@@ -6,7 +6,7 @@ cluster_name = "desafio"
 vpc_id = "vpc-2e0b6c53"
 
 ## Load Balancer
-lb_name = "desafio-lb-dev"
+lb_name = "desafio-lb-devel"
 
 ##Task definitions
 subnets_list = ["subnet-0cf1ea41", "subnet-d56d3cf4"]
