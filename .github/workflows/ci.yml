@@ -84,7 +84,7 @@ jobs:
 
     - name: Build docker image
       run: |
-        echo "IMAGE_VERSION=$(echo -n $(date) | md5sum)" >> $GITHUB_ENV
+        echo "IMAGE_VERSION=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
         echo ${{ env.IMAGE_VERSION }}
         sudo docker build -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }} .
 
