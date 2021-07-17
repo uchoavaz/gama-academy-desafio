@@ -43,7 +43,7 @@ jobs:
       run: |
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
-        if [ "$(cat terraform_command)" == "apply" ]; then echo "DESTROY=false" >> $GITHUB_ENV"; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "DESTROY=false" >> $GITHUB_ENV"; fi
+        if [ "$(cat terraform_command)" == "apply" ]; then echo "DESTROY=false" >> $GITHUB_ENV; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "DESTROY=false" >> $GITHUB_ENV; fi
 
     - name: Test
       run: |
