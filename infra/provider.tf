@@ -3,6 +3,12 @@ provider "aws" {
   shared_credentials_file = "~/.aws/credentials"
 }
 terraform {
+  backend "s3" {
+    bucket = "gama-academy-terraform-state"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+    profile = "default"
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
