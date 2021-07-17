@@ -47,7 +47,7 @@ jobs:
         
     - name: Cancel next jobs
       uses: andymckay/cancel-action@0.2
-      if: false
+      if: ${{ env.DEPLOY }}
 
   push-image:
     name: Push image to ECR
