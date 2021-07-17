@@ -1,3 +1,8 @@
+## Terraform
+bucket = "gama-academy-terraform-state"
+terraform_key = "terraform.tfstate"
+aws_region = "us-east-1"
+
 ## Cluster
 cluster_name = "desafio"
 vpc_id = "vpc-2e0b6c53"
@@ -8,7 +13,6 @@ lb_name = "desafio-lb"
 ##Task definitions
 subnets_list = ["subnet-0cf1ea41", "subnet-d56d3cf4"]
 ecs_task_execution_role_name = "DesafioEcsTaskExecutionRole"
-aws_region = "us-east-1"
 
 ## app
 app_name = "app"

@@ -4,9 +4,9 @@ provider "aws" {
 }
 terraform {
   backend "s3" {
-    bucket = "gama-academy-terraform-state"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
+    bucket = var.bucket
+    key    = var.terraform_key
+    region = var.aws_region
     profile = "default"
   }
   required_providers {

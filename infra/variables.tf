@@ -85,3 +85,13 @@ variable "app_name" {
   description = "App name"
 
 }
+
+variable "bucket" {
+  description = "Terraform state bucket"
+
+}
+
+variable "terraform_key" {
+  description = "Terraform Key"
+
+}

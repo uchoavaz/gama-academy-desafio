@@ -11,6 +11,7 @@ jobs:
     environment: production
     env:
       AWS_ACCOUNT_REGION: "us-east-1"
+      BUCKET: "gama-academy-terraform-state"
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -33,6 +34,10 @@ jobs:
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws configure set region ${{ env.AWS_ACCOUNT_REGION }}
+
+    - name: Create bucket for terraform state
+      run: |
+        aws s3 mb s3://${{ env.BUCKET }}  –region ${{ env.AWS_ACCOUNT_REGION }}
 
     - name: Terraform Init
       run: |
