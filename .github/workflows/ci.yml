@@ -46,11 +46,11 @@ jobs:
  
     - name: Terraform Init
       run: |
-        echo ${{ env.DEPLOY }}
+        echo ${{ env.DESTROY }}
   
     - name: Cancel next jobs
       uses: andymckay/cancel-action@0.2
-      if: ${{ env.DEPLOY }}
+      if: ${{ env.DESTROY }}
 
   push-image:
     name: Push image to ECR
