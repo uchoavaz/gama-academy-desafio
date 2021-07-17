@@ -84,7 +84,10 @@ jobs:
 
     - name: Build docker image
       run: |
-        sudo docker build -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:$(echo -n $(date) | md5sum | awk '{print $1}') .
+        echo "IMAGE_VERSION=$(echo -n $(date) | md5sum | awk '{print $1}')" >> $GITHUB_ENV
+        echo ${{ env.IMAGE_VERSION }}
+        echo ${{ env.AWS_ACCOUNT_ID }}
+        sudo docker build -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }} .
 
     - name: Push docker image
       run: |
