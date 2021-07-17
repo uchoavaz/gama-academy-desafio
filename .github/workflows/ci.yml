@@ -44,8 +44,12 @@ jobs:
       run: |
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
-        if [ "$(cat terraform_command)" == "apply" ]; then echo "apply"; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "destroy"; fi
-  
+        if [ "$(cat terraform_command)" == "apply" ]; then DESTROY="false"; elif [ "$(cat terraform_command)" == "destroy" ]; then DESTROY="false"; fi
+
+    - name: Terraform Init
+      run: |
+        echo ${{ env.DESTROY }}
+        
     - name: Cancelling
       uses: andymckay/cancel-action@0.2
       if: ${{ env.DESTROY }} == 'true'
