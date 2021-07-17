@@ -9,7 +9,8 @@ jobs:
     name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
-
+    env:
+      DESTROY: Teste
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -44,7 +45,7 @@ jobs:
         ./apply_destroy_script.sh
         if [ "$(cat terraform_command)" == "apply" ]; then echo "DESTROY=false" >> $GITHUB_ENV"; elif [ "$(cat terraform_command)" == "destroy" ]; then echo "DESTROY=false" >> $GITHUB_ENV"; fi
 
-    - name: Terraform Init
+    - name: Test
       run: |
         echo ${{ env.DESTROY }}
         
