@@ -69,11 +69,11 @@ jobs:
       run: |
         echo "teste"
 
-  push-image:
+  push-image-prod:
     name: Push image to ECR
     runs-on: ubuntu-latest
     environment: production
-    needs: deploy-aws
+    needs: deploy-aws-prod
     env:
       IMAGE_VERSION: "latest"
       DOCKER_USERNAME: AWS
@@ -109,11 +109,11 @@ jobs:
         sudo docker login --username ${{ env.DOCKER_USERNAME }} -p $PASSWORD ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
         sudo docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_ACCOUNT_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }}
 
-  deploy-app:
+  deploy-app-prod:
     name: Deploy app to ECS
     runs-on: ubuntu-latest
     environment: production
-    needs: push-image
+    needs: push-image-prod
     env:
       IMAGE_VERSION: "latest"
       REPOSITORY_NAME: "desafio/app"
