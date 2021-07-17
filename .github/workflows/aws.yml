@@ -63,17 +63,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Install aws cli     
-      run: |
-        sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        sudo unzip awscliv2.zip
-        aws iam list-roles
-
     - name: Aws Credentials
       run: |
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws configure set region us-east-1
+
+    - name: Install aws cli     
+      run: |
+        sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        sudo unzip awscliv2.zip
+        aws iam list-roles
 
     - name: Build docker image
       run: |
