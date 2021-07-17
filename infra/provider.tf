@@ -4,9 +4,9 @@ provider "aws" {
 }
 terraform {
   backend "s3" {
-    bucket = var.bucket
-    key    = var.terraform_key
-    region = var.aws_region
+    bucket  = var.bucket
+    key     = var.terraform_key
+    region  = var.aws_region
     profile = "default"
   }
   required_providers {
