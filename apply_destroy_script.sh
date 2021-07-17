@@ -5,11 +5,11 @@ cd infra
 if [ "$CMD" == "apply" ]
 then
 
-terraform apply -var-file="envs/desafio.tfvars"
+terraform apply -var-file="envs/desafio.tfvars" --auto-approve
 
 elif [ "$CMD" == "destroy" ]
 then
 
-terraform destroy -var-file="envs/desafio.tfvars"
+terraform destroy -var-file="envs/desafio.tfvars" --auto-approve
 
 fi
