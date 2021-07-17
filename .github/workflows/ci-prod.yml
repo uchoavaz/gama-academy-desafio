@@ -25,8 +25,8 @@ jobs:
 
     - name: Aws Credentials
       run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
         aws configure set region ${{ env.AWS_ACCOUNT_REGION }}
 
     - name: Create bucket for terraform state
@@ -63,8 +63,8 @@ jobs:
   
     - name: Aws Credentials
       run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
         aws configure set region ${{ env.AWS_ACCOUNT_REGION }}
 
     - name: Install aws cli     
@@ -104,8 +104,8 @@ jobs:
   
     - name: Aws Credentials
       run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
         aws configure set region ${{ env.AWS_ACCOUNT_REGION }}
 
     - name: Install aws cli     
