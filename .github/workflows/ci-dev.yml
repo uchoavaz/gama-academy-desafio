@@ -36,7 +36,6 @@ jobs:
     - name: Terraform Init
       run: |
         cd infra
-        terraform workspace select dev
         terraform init
 
     - name: Terraform Apply/Destroy
