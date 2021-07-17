@@ -59,6 +59,7 @@ jobs:
     environment: production
     needs: deploy-aws
     env:
+      IMAGE_VERSION: "latest"
       DOCKER_USERNAME: AWS
       REPOSITORY_NAME: "desafio/app"
       AWS_ACCOUNT_REGION: "us-east-1"
@@ -84,9 +85,6 @@ jobs:
 
     - name: Build docker image
       run: |
-        HASH=$(date +'%Y%m%d%H%M%S')
-        echo "IMAGE_VERSION=$HASH" >> $GITHUB_ENV
-        echo ${{ env.IMAGE_VERSION }}
         sudo docker build -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }} .
 
     - name: Push docker image
