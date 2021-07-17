@@ -20,12 +20,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-
-#     - name: Install aws cli     
-#       run: |
-#         sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-#         sudo unzip awscliv2.zip
-#         aws iam list-roles
+  
     - name: Install terraform     
       run: |
         sudo wget https://releases.hashicorp.com/terraform/1.0.1/terraform_1.0.1_linux_amd64.zip
@@ -48,8 +43,8 @@ jobs:
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
 
-  deploy-app:
-    name: Deploy App in ECS
+  push-image:
+    name: Push image to ECR
     runs-on: ubuntu-latest
     environment: production
     needs: deploy-aws
@@ -57,7 +52,6 @@ jobs:
       DOCKER_USERNAME: AWS
       AWS_ACCOUNT_ID: "635411703757"
       IMAGE_VERSION: "latest"
-      REPOSITORY_NAME: "desafio/app"
 
     steps:
     - name: Checkout
@@ -84,3 +78,40 @@ jobs:
         echo $PASSWORD
         sudo docker login --username ${{ env.DOCKER_USERNAME }} -p $PASSWORD ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
         sudo docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }}
+
+  deploy-app:
+    name: Push image to ECR
+    runs-on: ubuntu-latest
+    environment: production
+    needs: push-image
+    env:
+      AWS_ACCOUNT_ID: "635411703757"
+      IMAGE_VERSION: "latest"
+      REPOSITORY_NAME: "desafio/app"
+      AWS_ACCOUNT_REGION: "us-east-1"
+      APP_NAME: "app"
+      CLUSTER_NAME: "desafio"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+  
+    - name: Aws Credentials
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region us-east-1
+
+    - name: Install aws cli     
+      run: |
+        sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        sudo unzip awscliv2.zip
+
+    - name: deploy app
+      run: |
+        ECR_IMAGE="${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_ACCOUNT_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }}"
+        TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition ${{ env.APP_NAME }} --region ${{ env.AWS_ACCOUNT_REGION }})
+        NEW_TASK_DEFINTION=$(sudo echo $TASK_DEFINITION | jq --arg IMAGE "$ECR_IMAGE" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities) | del(.registeredAt) | del(.registeredBy)')
+        NEW_TASK_INFO=$(aws ecs register-task-definition --region "${{ env.AWS_ACCOUNT_REGION }}" --cli-input-json "${NEW_TASK_DEFINTION}")
+        NEW_REVISION=$(sudo echo $NEW_TASK_INFO | jq '.taskDefinition.revision')
+        OUTPUT=$(aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service $APP_NAME --task-definition ${{ env.APP_NAME }}:$NEW_REVISION --region ${{ env.AWS_ACCOUNT_REGION }})
