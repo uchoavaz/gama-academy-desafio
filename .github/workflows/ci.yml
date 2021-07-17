@@ -9,6 +9,8 @@ jobs:
     name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
+    env:
+      DESTROY: "true"
 
     steps:
     - name: Checkout
@@ -42,6 +44,10 @@ jobs:
       run: |
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
+  
+    - name: Cancelling
+      uses: andymckay/cancel-action@0.2
+      if: ${{ env.DESTROY }} == 'true'
 
   push-image:
     name: Push image to ECR
