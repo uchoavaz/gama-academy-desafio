@@ -80,7 +80,7 @@ jobs:
 
     - name: Push docker image
       run: |
-        PASSWORD=$(aws ecr get-login-password
+        PASSWORD=$(aws ecr get-login-password)
         echo $PASSWORD
         sudo docker login --username ${{ env.DOCKER_USERNAME }} -p $PASSWORD ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
         sudo docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }}
