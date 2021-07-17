@@ -1,6 +1,4 @@
 ## Terraform
-bucket = "gama-academy-terraform-state"
-terraform_key = "terraform.tfstate"
 aws_region = "us-east-1"
 
 ## Cluster
