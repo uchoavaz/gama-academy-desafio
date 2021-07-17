@@ -2,7 +2,7 @@ on:
   push:
     branches: [ dev ]
 
-name: Deploy to Amazon ECS
+name: Deploy to Amazon ECS in DEV Account
 
 jobs:
   deploy-aws-DEV:
