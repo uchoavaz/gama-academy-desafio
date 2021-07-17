@@ -6,7 +6,7 @@ name: Deploy to Amazon ECS
 
 jobs:
   deploy:
-    name: Deploy AWS Infra Prod
+    name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
 
@@ -43,7 +43,23 @@ jobs:
         cd infra
         terraform init
 
-    - name: Terraform Apply
+    - name: Terraform Apply/Destroy
       run: |
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
+
+  deploy:
+    name: Deploy App in ECS
+    runs-on: ubuntu-latest
+    environment: production
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Install docker
+      run: |
+        docker --version
