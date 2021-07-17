@@ -50,7 +50,6 @@ jobs:
         
     - name: Cancelling
       uses: andymckay/cancel-action@0.2
-      if: ${{ DESTROY }} == 'true'
 
   push-image:
     name: Push image to ECR
