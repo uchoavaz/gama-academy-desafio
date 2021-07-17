@@ -45,7 +45,7 @@ jobs:
   
     - name: Cancel next jobs
       uses: andymckay/cancel-action@0.2
-      if: ${{ env.DESTROY }}
+      if: ${{ env.DESTROY == 'true' }}
 
   push-image:
     name: Push image to ECR
