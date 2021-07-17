@@ -52,6 +52,8 @@ jobs:
       DOCKER_USERNAME: AWS
       AWS_ACCOUNT_ID: "635411703757"
       IMAGE_VERSION: "latest"
+      REPOSITORY_NAME: "desafio/app"
+      AWS_ACCOUNT_REGION: "us-east-1"
 
     steps:
     - name: Checkout
@@ -77,10 +79,10 @@ jobs:
         PASSWORD=$(aws ecr get-login-password)
         echo $PASSWORD
         sudo docker login --username ${{ env.DOCKER_USERNAME }} -p $PASSWORD ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-        sudo docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }}
+        sudo docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_ACCOUNT_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_VERSION }}
 
   deploy-app:
-    name: Push image to ECR
+    name: Deploy app to ECS
     runs-on: ubuntu-latest
     environment: production
     needs: push-image
