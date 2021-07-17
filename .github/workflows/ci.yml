@@ -49,7 +49,7 @@ jobs:
         
     - name: Cancelling
       uses: andymckay/cancel-action@0.2
-      if: "$(cat terraform_command)" == 'destroy'
+      if: "$(cat terraform_command)" == "destroy"
 
   push-image:
     name: Push image to ECR
