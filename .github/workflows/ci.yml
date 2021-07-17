@@ -41,7 +41,6 @@ jobs:
 
     - name: Terraform Apply/Destroy
       run: |
-        sudo chmod +x apply_destroy_script.sh
         if [ "$(cat terraform_command)" == "apply" ]; then cd infra && terraform apply -var-file="envs/desafio.tfvars" --auto-approve && echo "DESTROY=false" >> $GITHUB_ENV; elif [ "$(cat terraform_command)" == "destroy" ]; then cd infra && terraform destroy -var-file="envs/desafio.tfvars" --auto-approve && echo "DESTROY=true" >> $GITHUB_ENV; fi
   
     - name: Cancel next jobs
