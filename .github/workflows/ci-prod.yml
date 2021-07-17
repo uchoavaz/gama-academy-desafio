@@ -40,7 +40,7 @@ jobs:
 
     - name: Terraform Apply/Destroy
       run: |
-        if [ "$(cat terraform_ci_state/terraform_command_prod)" == "apply" ]; then cd infra && terraform workspace select prod && terraform apply -var-file="envs/desafio-prod.tfvars" --auto-approve && echo "DESTROY=false" >> $GITHUB_ENV; elif [ "$(cat terraform_ci_state/terraform_command_prod)" == "destroy" ]; then cd infra && terraform workspace select dev && terraform destroy -var-file="envs/desafio-prod.tfvars" --auto-approve && echo "DESTROY=true" >> $GITHUB_ENV; fi
+        if [ "$(cat terraform_ci_state/terraform_command_prod)" == "apply" ]; then cd infra && terraform workspace select prod && terraform apply -var-file="envs/desafio-prod.tfvars" --auto-approve && echo "DESTROY=false" >> $GITHUB_ENV; elif [ "$(cat terraform_ci_state/terraform_command_prod)" == "destroy" ]; then cd infra && terraform workspace select prod && terraform destroy -var-file="envs/desafio-prod.tfvars" --auto-approve && echo "DESTROY=true" >> $GITHUB_ENV; fi
 
     - name: Cancel next jobs
       uses: andymckay/cancel-action@0.2
