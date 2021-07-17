@@ -5,7 +5,7 @@ on:
 name: Deploy to Amazon ECS
 
 jobs:
-  deploy:
+  deploy-aws:
     name: Deploy/Destroy AWS Infra Prod
     runs-on: ubuntu-latest
     environment: production
@@ -48,7 +48,7 @@ jobs:
         sudo chmod +x apply_destroy_script.sh
         ./apply_destroy_script.sh
 
-  deploy:
+  deploy-app:
     name: Deploy App in ECS
     runs-on: ubuntu-latest
     environment: production
