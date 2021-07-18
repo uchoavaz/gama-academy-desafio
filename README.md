@@ -10,8 +10,11 @@ How the deploy works
 This deploy consists of using Github actions for an automated deploy of the application in Node.js in the ECS service with Fargate, from AWS. The workflow consists in:
   1. Set Aws Credentials in Github
   2. Deploy the application only setting apply or destroy and pushing the commit to the dev branch(dev environment) or master branch (prod environment).
-  3. Check for the CI/CD treadmill.
-  4. Use the application.
+  3. Terraform will handle the deploy/destroy of aws infra.(Terraform state is stored in an s3 bucket).
+  4. Push docker image to ECR
+  5. Update task definition in ECS to get latest docker image.
+  6. Check for the CI/CD treadmill status.
+  7. Use the application.
 
 GitHub Set credentials
 ------------
